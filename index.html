@@ -43,7 +43,7 @@
   <div class="carousel" id="carousel"></div>
 
   <script>
-    fetch('https://linkedin-proxy.onrender.com/posts')
+    fetch('https://linkedin-proxy.onrender.com/api/posts')
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById('carousel');
