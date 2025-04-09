@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrossel de Posts</title>
+  <style>
+    body {
+      font-family: 'Questrial', sans-serif;
+      margin: 0;
+      background-color: transparent;
+    }
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding: 16px;
+    }
+    .post {
+      flex: 0 0 auto;
+      width: 300px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      scroll-snap-align: start;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .post h3 {
+      font-family: "Wix Madefor Text", sans-serif;
+      font-weight: 600;
+      color: #004FB0;
+      font-size: 17px;
+    }
+    .post .date {
+      color: #7B97B7;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel" id="carousel"></div>
+
+  <script>
+    fetch('https://linkedin-proxy.onrender.com/posts')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('carousel');
+        data.slice(0, 4).forEach(post => {
+          const el = document.createElement('div');
+          el.className = 'post';
+          el.innerHTML = `
+            <div class="date">${new Date(post.createdAt).toLocaleDateString()}</div>
+            <h3>${post.title}</h3>
+            <p>${post.text || ''}</p>
+          `;
+          container.appendChild(el);
+        });
+      });
+  </script>
+</body>
+</html>
